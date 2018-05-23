@@ -24,22 +24,6 @@
 #include <stdio.h>
 #include <string.h>
 
-void CreateHiddenWord(HiddenWord *hidden_word, const char *word) {
-  size_t word_length = strlen(word);
-  hidden_word->word = malloc(sizeof(char) * (word_length + 1));
-  hidden_word->founds = malloc(sizeof(bool) * strlen(word));
-  snprintf(hidden_word->word, word_length + 1, "%s", word);
-  for (size_t i = 0; i < word_length; i++) {
-    hidden_word->founds[i] = false;
-  }
-  hidden_word->length = word_length;
-}
-
-void FreeHiddenWord(HiddenWord *hidden_word) {
-  free(hidden_word->word);
-  free(hidden_word->founds);
-}
-
 bool InHiddenWord(HiddenWord *hidden_word, const char c) {
   bool founds = false;
   for (size_t i = 0; i < hidden_word->length; i++) {
@@ -49,4 +33,21 @@ bool InHiddenWord(HiddenWord *hidden_word, const char c) {
     }
   }
   return founds;
+}
+
+HiddenWord* NewHiddenWord(const char *word) {
+  HiddenWord *hidden_word = malloc(sizeof(HiddenWord));
+  bool *founds = malloc(sizeof(bool) * strlen(word));
+  for (size_t i = 0; i < strlen(word); i++) {
+    founds[i] = false;
+  }
+  hidden_word->word = word;
+  hidden_word->founds = founds;
+  hidden_word->length = strlen(word);
+  return hidden_word;
+}
+
+void DestroyHiddenWord(HiddenWord *hidden_word) {
+  free(hidden_word->founds);
+  free(hidden_word);
 }

@@ -22,41 +22,49 @@
 #include <setjmp.h>
 #include <stdbool.h>
 #include <stdint.h>
+#include <stdlib.h>
 
 #include <cmocka.h>
 
 #include "tsabohy/hidden_word.h"
 
-static void CreateHiddenWordTest(void **state) {
-  struct HiddenWord hidden_word;
-  CreateHiddenWord(&hidden_word, "abc");
-  assert_string_equal(hidden_word.word, "abc");
-  assert_int_equal(hidden_word.length, 3);
-  FreeHiddenWord(&hidden_word);
+static int SetUp(void **state) {
+  HiddenWord* hidden_word = NULL;
+  hidden_word = NewHiddenWord("abc");
+  *state = hidden_word;
+  return 0;
+}
+
+static int TearDown(void **state) {
+  HiddenWord *hidden_word = *state;
+  DestroyHiddenWord(hidden_word);
+  return 0;
+}
+
+static void NewHiddenWordTest(void **state) {
+  HiddenWord *hidden_word = *state;
+  assert_string_equal(hidden_word->word, "abc");
+  assert_int_equal(hidden_word->length, 3);
 }
 
 static void AllCharactersAreHiddenAtCreateTimeTest(void **state) {
-  HiddenWord hidden_word;
-  CreateHiddenWord(&hidden_word, "abc");
-  for (size_t i = 0; i < hidden_word.length; i++) {
-    assert_false(hidden_word.founds[i]);
+  HiddenWord *hidden_word = *state;
+  for (size_t i = 0; i < hidden_word->length; i++) {
+    assert_false(hidden_word->founds[i]);
   }
-  FreeHiddenWord(&hidden_word);
 }
 
 static void InHiddenWordTest(void **state) {
-  HiddenWord hidden_word;
-  CreateHiddenWord(&hidden_word, "abc");
-  assert_true(InHiddenWord(&hidden_word, 'a'));
-  assert_false(InHiddenWord(&hidden_word, 'z'));
-  FreeHiddenWord(&hidden_word);
+  HiddenWord *hidden_word = *state;
+  assert_true(InHiddenWord(hidden_word, 'a'));
+  assert_false(InHiddenWord(hidden_word, 'z'));
 }
 
 int main(int argc, char **argv) {
   const struct CMUnitTest tests[] = {
-    cmocka_unit_test(CreateHiddenWordTest),
-    cmocka_unit_test(AllCharactersAreHiddenAtCreateTimeTest),
-    cmocka_unit_test(InHiddenWordTest)
+    cmocka_unit_test_setup_teardown(NewHiddenWordTest, SetUp, TearDown),
+    cmocka_unit_test_setup_teardown(AllCharactersAreHiddenAtCreateTimeTest, SetUp, TearDown),
+    cmocka_unit_test_setup_teardown(InHiddenWordTest, SetUp, TearDown)
   };
-  return cmocka_run_group_tests(tests, NULL, NULL);
+  return cmocka_run_group_tests(tests, SetUp, TearDown);
 }

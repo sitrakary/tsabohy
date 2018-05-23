@@ -28,7 +28,7 @@ typedef struct HiddenWord HiddenWord;
 
 // Structure used to hold hidden word and his length and founds characters.
 struct HiddenWord {
-  char *word;
+  const char *word;
   bool *founds;
   size_t length;
 };
@@ -36,10 +36,10 @@ struct HiddenWord {
 // Create an hidden word.
 // If CreateHiddenWord was called you must call FreeHiddenWord to free memory
 // previously allocated.
-void CreateHiddenWord(HiddenWord *hidden_word, const char *word);
+HiddenWord* NewHiddenWord(const char *word);
 
 // Free memory allocated by create_hidden_word.
-void FreeHiddenWord(HiddenWord *hidden_word);
+void DestroyHiddenWord(HiddenWord *hidden_word);
 
 // Check if a character is in the hidden word and change the corresponding
 // founds to true.
