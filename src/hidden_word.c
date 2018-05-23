@@ -19,10 +19,10 @@
 
 #include "tsabohy/hidden_word.h"
 
+#include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <stdbool.h>
 
 void CreateHiddenWord(HiddenWord *hidden_word, const char *word) {
   size_t word_length = strlen(word);
@@ -38,4 +38,15 @@ void CreateHiddenWord(HiddenWord *hidden_word, const char *word) {
 void FreeHiddenWord(HiddenWord *hidden_word) {
   free(hidden_word->word);
   free(hidden_word->founds);
+}
+
+bool InHiddenWord(HiddenWord *hidden_word, const char c) {
+  bool founds = false;
+  for (size_t i = 0; i < hidden_word->length; i++) {
+    if (hidden_word->word[i] == c) {
+      founds = true;
+      hidden_word->founds[i] = true;
+    }
+  }
+  return founds;
 }

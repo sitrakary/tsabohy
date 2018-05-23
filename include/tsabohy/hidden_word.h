@@ -41,4 +41,8 @@ void CreateHiddenWord(HiddenWord *hidden_word, const char *word);
 // Free memory allocated by create_hidden_word.
 void FreeHiddenWord(HiddenWord *hidden_word);
 
+// Check if a character is in the hidden word and change the corresponding
+// founds to true.
+bool InHiddenWord(HiddenWord *hidden_word, const char c);
+
 #endif  // INCLUDE_TSABOHY_HIDDEN_WORD_H_

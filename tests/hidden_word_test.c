@@ -35,7 +35,7 @@ static void CreateHiddenWordTest(void **state) {
   FreeHiddenWord(&hidden_word);
 }
 
-static void AllCharactersAreHiddenAtCreateTime(void **state) {
+static void AllCharactersAreHiddenAtCreateTimeTest(void **state) {
   HiddenWord hidden_word;
   CreateHiddenWord(&hidden_word, "abc");
   for (size_t i = 0; i < hidden_word.length; i++) {
@@ -44,10 +44,19 @@ static void AllCharactersAreHiddenAtCreateTime(void **state) {
   FreeHiddenWord(&hidden_word);
 }
 
+static void InHiddenWordTest(void **state) {
+  HiddenWord hidden_word;
+  CreateHiddenWord(&hidden_word, "abc");
+  assert_true(InHiddenWord(&hidden_word, 'a'));
+  assert_false(InHiddenWord(&hidden_word, 'z'));
+  FreeHiddenWord(&hidden_word);
+}
+
 int main(int argc, char **argv) {
   const struct CMUnitTest tests[] = {
     cmocka_unit_test(CreateHiddenWordTest),
-    cmocka_unit_test(AllCharactersAreHiddenAtCreateTime)
+    cmocka_unit_test(AllCharactersAreHiddenAtCreateTimeTest),
+    cmocka_unit_test(InHiddenWordTest)
   };
   return cmocka_run_group_tests(tests, NULL, NULL);
 }
