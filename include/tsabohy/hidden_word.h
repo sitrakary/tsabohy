@@ -39,4 +39,6 @@ void DeleteHiddenWord(HiddenWord *hidden_word);
 
 bool InHiddenWord(HiddenWord *hidden_word, const char c);
 
+bool FoundsHiddenWord(HiddenWord *hidden_word);
+
 #endif  // INCLUDE_TSABOHY_HIDDEN_WORD_H_

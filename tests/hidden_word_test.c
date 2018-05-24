@@ -58,12 +58,21 @@ static void TestInHiddenWordUpdatesFounds(void **state) {
   assert_true(hidden_word->founds[0]);
 }
 
+static void TestFoundsHiddenWord(void **state) {
+  HiddenWord *hidden_word = *state;
+  InHiddenWord(hidden_word, 'a');
+  InHiddenWord(hidden_word, 'b');
+  InHiddenWord(hidden_word, 'c');
+  assert_true(FoundsHiddenWord(hidden_word));
+}
+
 int main(int argc, char **argv) {
   const struct CMUnitTest tests[] = {
     cmocka_unit_test_setup_teardown(TestStructHiddenWord, SetUp, TearDown),
     cmocka_unit_test_setup_teardown(TestIsInHiddenWord, SetUp, TearDown),
     cmocka_unit_test_setup_teardown(TestInHiddenWordUpdatesFounds,
-      SetUp, TearDown)
+      SetUp, TearDown),
+    cmocka_unit_test_setup_teardown(TestFoundsHiddenWord, SetUp, TearDown)
   };
   return cmocka_run_group_tests(tests, SetUp, TearDown);
 }

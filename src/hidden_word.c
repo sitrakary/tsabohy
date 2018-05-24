@@ -54,3 +54,13 @@ bool InHiddenWord(HiddenWord *hidden_word, const char c) {
   }
   return founds;
 }
+
+// Returns true if all characters in the hidden word are founds.
+bool FoundsHiddenWord(HiddenWord *hidden_word) {
+  for (size_t i = 0; i < hidden_word->length; i++) {
+    if (!hidden_word->founds[i]) {
+      return false;
+    }
+  }
+  return true;
+}
