@@ -16,7 +16,6 @@
 // THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-// DEALINGS IN THE SOFTWARE.
 
 #ifndef INCLUDE_TSABOHY_HIDDEN_WORD_H_
 #define INCLUDE_TSABOHY_HIDDEN_WORD_H_
@@ -24,25 +23,20 @@
 #include <stdbool.h>
 #include <stddef.h>
 
+#include "tsabohy/config.h"
+
 typedef struct HiddenWord HiddenWord;
 
-// Structure used to hold hidden word and his length and founds characters.
 struct HiddenWord {
-  const char *word;
-  bool *founds;
   size_t length;
+  bool founds[TSABOHY_MAX_WORD_LENGTH];
+  char word[TSABOHY_MAX_WORD_LENGTH];
 };
 
-// Create an hidden word.
-// If CreateHiddenWord was called you must call FreeHiddenWord to free memory
-// previously allocated.
 HiddenWord* NewHiddenWord(const char *word);
 
-// Free memory allocated by create_hidden_word.
-void DestroyHiddenWord(HiddenWord *hidden_word);
+void DeleteHiddenWord(HiddenWord *hidden_word);
 
-// Check if a character is in the hidden word and change the corresponding
-// founds to true.
 bool InHiddenWord(HiddenWord *hidden_word, const char c);
 
 #endif  // INCLUDE_TSABOHY_HIDDEN_WORD_H_

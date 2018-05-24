@@ -16,20 +16,10 @@
 // THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-// DEALINGS IN THE SOFTWARE.
 
-#include <stdarg.h>
-#include <stddef.h>
-#include <setjmp.h>
-#include <cmocka.h>
+#ifndef INCLUDE_TSABOHY_CONFIG_H_
+#define INCLUDE_TSABOHY_CONFIG_H_
 
-static void basic_test_success(void **state) {
-  (void) state;
-}
+#define TSABOHY_MAX_WORD_LENGTH @TSABOHY_MAX_WORD_LENGTH@
 
-int main(int argc, char const *argv[]) {
-  const struct CMUnitTest tests[] = {
-    cmocka_unit_test(basic_test_success)
-  };
-  return cmocka_run_group_tests(tests, NULL, NULL);
-}
+#endif  // INCLUDE_TSABOHY_CONFIG_H_

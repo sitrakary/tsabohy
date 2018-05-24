@@ -1,20 +1,21 @@
-cmake_minimum_required (VERSION 2.8)
-project (Tsabohy)
+cmake_minimum_required(VERSION 2.8)
+project(Tsabohy)
 
-include_directories ("${CMAKE_SOURCE_DIR}/include")
+set(TSABOHY_MAX_WORD_LENGTH 100)
 
-add_library (tsabohy src/hidden_word.c)
+configure_file(
+  "${PROJECT_SOURCE_DIR}/config.h.in"
+  "${PROJECT_SOURCE_DIR}/include/tsabohy/config.h"
+)
 
-option (BUILD_TESTS "Build tests." ON)
+include_directories("${CMAKE_SOURCE_DIR}/include")
 
-if (BUILD_TESTS)
+add_library(tsabohy src/hidden_word.c)
+
+option(BUILD_TESTS "Build tests." ON)
+
+if(BUILD_TESTS)
   find_package (cmocka)
-
-  macro (add_test name)
-    add_executable (${name} tests/${name}.c)
-    target_link_libraries (${name} tsabohy cmocka)
-  endmacro (add_test)
-
-  add_test (basic)
-  add_test (hidden_word_test)
-endif (BUILD_TESTS)
+  add_executable(hidden_word_test tests/hidden_word_test.c)
+  target_link_libraries(hidden_word_test tsabohy cmocka)
+endif(BUILD_TESTS)
