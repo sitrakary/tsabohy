@@ -62,7 +62,8 @@ int main(int argc, char **argv) {
   const struct CMUnitTest tests[] = {
     cmocka_unit_test_setup_teardown(TestStructHiddenWord, SetUp, TearDown),
     cmocka_unit_test_setup_teardown(TestIsInHiddenWord, SetUp, TearDown),
-    cmocka_unit_test_setup_teardown(TestInHiddenWordUpdatesFounds, SetUp, TearDown)
+    cmocka_unit_test_setup_teardown(TestInHiddenWordUpdatesFounds,
+      SetUp, TearDown)
   };
   return cmocka_run_group_tests(tests, SetUp, TearDown);
 }
